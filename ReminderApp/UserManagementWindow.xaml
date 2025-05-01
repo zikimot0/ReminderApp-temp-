@@ -1,0 +1,27 @@
+﻿<Window x:Class="ReminderApp.UserManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="User Management" Height="450" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Registered Users" FontSize="18" Margin="10" HorizontalAlignment="Center"/>
+
+        <DataGrid x:Name="UsersDataGrid" Grid.Row="1" Margin="10" 
+                  AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                <DataGridTextColumn Header="Registered Date" Binding="{Binding CreatedAt}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Delete User" Width="120" Height="30" Margin="5" Click="DeleteUser_Click"/>
+            <Button Content="Close" Width="80" Height="30" Margin="5" Click="Close_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
