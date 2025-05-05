@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace ReminderApp
 {
     public partial class LoginWindow : Window
     {
+        // Regular expression for email validation
+        private readonly Regex _validEmailRegex = new Regex(
+            @"^(?!(admin@gwapo\.com)$)[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|aol\.com|mail\.com|yandex\.com|zoho\.com|\w+\.\w+)$",
+            RegexOptions.IgnoreCase);
+
         public LoginWindow()
         {
             InitializeComponent();
-            // Clear any previous errors when window loads
-            ErrorMessage.Visibility = Visibility.Collapsed;
+            EmailTextBox.Focus(); // Focus on email field when window loads
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -21,9 +26,28 @@ namespace ReminderApp
             // Clear previous error messages
             ErrorMessage.Visibility = Visibility.Collapsed;
 
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            // Validation
+            if (string.IsNullOrWhiteSpace(email))
             {
-                ShowError("Email and Password cannot be empty.");
+                ShowError("Please enter your email address.");
+                EmailTextBox.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                ShowError("Please enter your password.");
+                PasswordBox.Focus();
+                return;
+            }
+
+            // Email format validation (only for non-admin accounts)
+            if (!email.Equals("admin@gwapo.com", StringComparison.OrdinalIgnoreCase) &&
+                !_validEmailRegex.IsMatch(email))
+            {
+                ShowError("Please use a valid email address from common providers.\nExamples: user@gmail.com, user@yahoo.com");
+                EmailTextBox.Focus();
+                EmailTextBox.SelectAll();
                 return;
             }
 
@@ -55,6 +79,8 @@ namespace ReminderApp
                     {
                         ShowError("Account not found. Please register first.");
                         LogLoginAttempt(email, false);
+                        EmailTextBox.Focus();
+                        EmailTextBox.SelectAll();
                         return;
                     }
 
@@ -67,6 +93,8 @@ namespace ReminderApp
                     {
                         ShowError("Invalid password. Please try again.");
                         LogLoginAttempt(email, false);
+                        PasswordBox.Focus();
+                        PasswordBox.SelectAll();
                     }
                 }
             }
@@ -76,7 +104,7 @@ namespace ReminderApp
             }
             catch (Exception ex)
             {
-                ShowError($"Unexpected error: {ex.Message}");
+                ShowError($"An error occurred: {ex.Message}");
             }
         }
 
@@ -124,6 +152,8 @@ namespace ReminderApp
             var registerWindow = new RegisterWindow();
             registerWindow.Show();
             this.Close();
+
+
         }
 
         private void LogLoginAttempt(string email, bool successful)

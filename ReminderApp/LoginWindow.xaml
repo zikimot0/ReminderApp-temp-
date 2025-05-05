@@ -1,16 +1,74 @@
 ﻿<Window x:Class="ReminderApp.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Login" Height="300" Width="400">
-    <Grid>
-        <TextBlock Text="Login" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top"/>
+        Title="Login" Height="400" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <TextBox x:Name="EmailTextBox" Width="200" Height="30" VerticalAlignment="Top" Margin="0,70,0,0" HorizontalAlignment="Center" />
+        <!-- Title -->
+        <TextBlock Text="Login to Reminder App" 
+                   FontSize="24" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center" 
+                   Grid.Row="0" 
+                   Margin="0,0,0,20"/>
 
-        <PasswordBox x:Name="PasswordBox" Width="200" Height="30" VerticalAlignment="Top" Margin="0,120,0,0" HorizontalAlignment="Center" />
+        <!-- Email Input -->
+        <TextBlock Text="Email:" 
+                   Grid.Row="1" 
+                   Margin="5,0"/>
+        <TextBox x:Name="EmailTextBox" 
+                 Grid.Row="2" 
+                 Height="30" 
+                 Margin="0,0,0,10"
+                 Padding="5"
+                 ToolTip="Enter your email address (e.g., user@gmail.com)"/>
 
-        <Button Content="Login" Width="100" Height="30" VerticalAlignment="Top" Margin="0,170,0,0" HorizontalAlignment="Center" Click="LoginButton_Click"/>
-        <Button Content="Register" Width="100" Height="30" VerticalAlignment="Top" Margin="0,210,0,0" HorizontalAlignment="Center" Click="RegisterButton_Click"/>
-        <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top"/>
+        <!-- Password Input -->
+        <TextBlock Text="Password:" 
+                   Grid.Row="3" 
+                   Margin="5,0"/>
+        <PasswordBox x:Name="PasswordBox" 
+                     Grid.Row="4" 
+                     Height="30" 
+                     Margin="0,0,0,20"
+                     Padding="5"/>
+
+        <!-- Error Message - Now has its own dedicated row -->
+        <TextBlock x:Name="ErrorMessage" 
+                   Foreground="Red" 
+                   Visibility="Collapsed"
+                   Grid.Row="5" 
+                   TextWrapping="Wrap"
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,10"
+                   TextAlignment="Center"
+                   MaxWidth="300"/>
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Row="6" 
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0">
+            <Button Content="Login" 
+                    Width="100" 
+                    Height="30" 
+                    Margin="0,0,10,0" 
+                    Click="LoginButton_Click"/>
+            <Button Content="Register" 
+                    Width="100" 
+                    Height="30" 
+                    Click="RegisterButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

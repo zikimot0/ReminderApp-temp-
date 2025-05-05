@@ -61,6 +61,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="DeviceInfoHelper.cs" />
+    <Compile Include="LoginLog.cs" />
+    <Compile Include="LoginLogStorage.cs" />
     <Compile Include="PasswordHasher.cs" />
     <Compile Include="RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>

@@ -1,0 +1,14 @@
+# Ignore Visual Studio temporary files
+.vs/
+*.user
+*.suo
+*.vsidx
+
+# Ignore build output
+*.exe
+*.pdb
+bin/
+obj/
+
+# Ignore IDE layout settings
+DocumentLayout*.json
