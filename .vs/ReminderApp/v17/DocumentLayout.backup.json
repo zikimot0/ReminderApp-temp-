@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|C:\\Users\\Admin\\source\\repos\\ReminderApp\\reminderapp\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|solutionrelative:reminderapp\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|c:\\users\\admin\\source\\repos\\reminderapp\\reminderapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|solutionrelative:reminderapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|C:\\Users\\Admin\\source\\repos\\ReminderApp\\reminderapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|solutionrelative:reminderapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|C:\\Users\\Admin\\source\\repos\\ReminderApp\\reminderapp\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|solutionrelative:reminderapp\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{929B63E5-B0EF-4FEE-A625-47A90E00B968}|ReminderApp\\ReminderApp.csproj|C:\\Users\\Admin\\source\\repos\\ReminderApp\\reminderapp\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -82,17 +82,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "ReminderApp\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\MainWindow.xaml.cs*",
-              "RelativeToolTip": "ReminderApp\\MainWindow.xaml.cs*",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAABYAAABEAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\MainWindow.xaml.cs",
+              "RelativeToolTip": "ReminderApp\\MainWindow.xaml.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAQwCAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-23T05:19:43.211Z",
               "EditorCaption": ""
@@ -111,12 +111,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\MainWindow.xaml",
               "RelativeDocumentMoniker": "ReminderApp\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\MainWindow.xaml*",
-              "RelativeToolTip": "ReminderApp\\MainWindow.xaml*",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\MainWindow.xaml",
+              "RelativeToolTip": "ReminderApp\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-04-23T05:19:32.686Z",
               "EditorCaption": ""
@@ -136,13 +136,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "LoginWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\LoginWindow.xaml.cs",
               "RelativeDocumentMoniker": "ReminderApp\\LoginWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\LoginWindow.xaml.cs",
-              "RelativeToolTip": "ReminderApp\\LoginWindow.xaml.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAkwLgAAAABAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ReminderApp\\ReminderApp\\LoginWindow.xaml.cs*",
+              "RelativeToolTip": "ReminderApp\\LoginWindow.xaml.cs*",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAiwJsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-23T05:17:31.848Z",
               "EditorCaption": ""
