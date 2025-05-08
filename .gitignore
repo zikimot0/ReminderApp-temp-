@@ -9,6 +9,7 @@
 *.pdb
 bin/
 obj/
+.idea/
 
 # Ignore IDE layout settings
 DocumentLayout*.json
