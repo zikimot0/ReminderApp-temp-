@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Threading;
@@ -67,42 +65,64 @@ namespace ReminderApp
         {
             _alarmTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(30) // Check every 30 seconds
+                Interval = TimeSpan.FromSeconds(1) // Check every 1 second para wala delay
             };
             _alarmTimer.Tick += CheckForDueReminders;
             _alarmTimer.Start();
         }
 
+        //Edited by chat gpt lol
         private void CheckForDueReminders(object sender, EventArgs e)
         {
             try
             {
-                using (var connection = DatabaseHelper.GetConnection())
+                using var connection = DatabaseHelper.GetConnection();
+                connection.Open();
+
+                string query = @"
+                SELECT Id, Subject, Description, AlarmPath, DateTime
+                FROM Reminders
+                WHERE DateTime <= @CurrentTime AND Triggered = 0 AND UserId = @UserId
+                ORDER BY DateTime";
+
+                using (var command = new SQLiteCommand(query, connection))
                 {
-                    connection.Open();
-                    string query = @"
-                        SELECT Id, Subject, Description 
-                        FROM Reminders 
-                        WHERE DateTime <= @CurrentTime AND Triggered = 0 AND UserId = @UserId";
+                    command.Parameters.AddWithValue("@CurrentTime", DateTime.Now.ToString("o"));
+                    command.Parameters.AddWithValue("@UserId", GetUserId(_userEmail));
 
-                    using (var command = new SQLiteCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
                     {
-                        command.Parameters.AddWithValue("@CurrentTime", DateTime.Now.ToString("o"));
-                        command.Parameters.AddWithValue("@UserId", GetUserId(_userEmail));
+                        List<int> triggeredReminderIds = new List<int>();
+                        DateTime? nextReminderTime = null;
 
-                        using (var reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            int reminderId = reader.GetInt32(0);
+                            string subject = reader.GetString(1);
+                            string description = reader.GetString(2);
+                            string? alarmPath = reader.IsDBNull(3) ? null : reader.GetString(3);
+                            DateTime reminderTime = reader.GetDateTime(4);
+
+                            Dispatcher.Invoke(() => { TriggerAlarm(subject, description, alarmPath); });
+
+                            // Mark the reminder as triggered
+                            MarkReminderAsTriggered(reminderId, connection);
+                            triggeredReminderIds.Add(reminderId);
+
+                            // Track the next reminder time for adjusting the timer interval
+                            if (nextReminderTime == null || reminderTime < nextReminderTime)
                             {
-                                int reminderId = reader.GetInt32(0);
-                                string subject = reader.GetString(1);
-                                string description = reader.GetString(2);
+                                nextReminderTime = reminderTime;
+                            }
+                        }
 
-                                // Trigger the alarm
-                                TriggerAlarm(subject, description);
-
-                                // Mark the reminder as triggered
-                                MarkReminderAsTriggered(reminderId, connection);
+                        // Adjust the timer interval to the next reminder time if any
+                        if (nextReminderTime != null)
+                        {
+                            TimeSpan timeToNextReminder = nextReminderTime.Value - DateTime.Now;
+                            if (timeToNextReminder > TimeSpan.Zero)
+                            {
+                                _alarmTimer.Interval = timeToNextReminder;
                             }
                         }
                     }
@@ -110,19 +130,22 @@ namespace ReminderApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error checking reminders: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error checking reminders: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void TriggerAlarm(string subject, string description)
+        private static void TriggerAlarm(string subject, string description, string? alarmPath)
         {
-            App.PlayReminderSound();
-            MessageBox.Show($"Reminder: {subject}\n{description}", "Reminder",
+            App.PlayReminderSound(alarmPath);
+            var result = MessageBox.Show($"Reminder: {subject}\n{description}", "Reminder",
                 MessageBoxButton.OK, MessageBoxImage.Information);
+            if (result == MessageBoxResult.OK)
+            {
+                App.StopReminderSound();
+            }
         }
 
-        private void MarkReminderAsTriggered(int reminderId, SQLiteConnection connection)
+        private static void MarkReminderAsTriggered(int reminderId, SQLiteConnection connection)
         {
             string updateQuery = "UPDATE Reminders SET Triggered = 1 WHERE Id = @Id";
             using (var command = new SQLiteCommand(updateQuery, connection))
@@ -201,7 +224,7 @@ namespace ReminderApp
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening user management: {ex.Message}",
-                              "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -297,7 +320,7 @@ namespace ReminderApp
                             while (reader.Read())
                             {
                                 logs.AppendLine($"{reader["Timestamp"]}: {reader["Email"]} - " +
-               (Convert.ToInt32(reader["IsSuccessful"]) == 1 ? "Success" : "Failed"));
+                                                (Convert.ToInt32(reader["IsSuccessful"]) == 1 ? "Success" : "Failed"));
                             }
 
                             if (logs.Length == 0)

@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS Reminders (
     Subject TEXT NOT NULL,
     Description TEXT,
     Triggered INTEGER DEFAULT 0,
+    AlarmPath TEXT,
     FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
 )";
 
