@@ -11,6 +11,7 @@ namespace ReminderApp
 
         public ReminderWindow(string userEmail)
         {
+
             InitializeComponent();
             _userEmail = userEmail;
 
