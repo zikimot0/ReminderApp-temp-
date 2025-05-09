@@ -69,8 +69,7 @@ namespace ReminderApp
                     }
                 }
 
-                MessageBox.Show("Reminder saved successfully!", "Success",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                
                 this.Close();
             }
             catch (Exception ex)

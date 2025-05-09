@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Login" Height="400" Width="400"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Background="#F3F4F6">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -16,58 +15,70 @@
         </Grid.RowDefinitions>
 
         <!-- Title -->
-        <TextBlock Text="Login to Reminder App" 
-                   FontSize="24" 
+        <TextBlock Text="Login to Reminder App"
+                   FontSize="24"
                    FontWeight="Bold"
-                   HorizontalAlignment="Center" 
-                   Grid.Row="0" 
-                   Margin="0,0,0,20"/>
+                   Foreground="#333"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"
+                   Grid.Row="0"/>
 
         <!-- Email Input -->
-        <TextBlock Text="Email:" 
-                   Grid.Row="1" 
-                   Margin="5,0"/>
-        <TextBox x:Name="EmailTextBox" 
-                 Grid.Row="2" 
-                 Height="30" 
-                 Margin="0,0,0,10"
-                 Padding="5"
-                 ToolTip="Enter your email address (e.g., user@gmail.com)"/>
+        <StackPanel Grid.Row="1" Margin="0,10,0,0">
+            <TextBlock Text="Email"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="#555"
+                       Margin="0,0,0,5"/>
+            <TextBox x:Name="EmailTextBox"
+                     Height="30"
+                     Padding="5"
+                     Background="White"
+                     BorderBrush="#CCC"
+                     ToolTip="Enter your email address (e.g., user@gmail.com)"/>
+        </StackPanel>
 
         <!-- Password Input -->
-        <TextBlock Text="Password:" 
-                   Grid.Row="3" 
-                   Margin="5,0"/>
-        <PasswordBox x:Name="PasswordBox" 
-                     Grid.Row="4" 
-                     Height="30" 
-                     Margin="0,0,0,20"
-                     Padding="5"/>
+        <StackPanel Grid.Row="2" Margin="0,10,0,0">
+            <TextBlock Text="Password"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="#555"
+                       Margin="0,0,0,5"/>
+            <PasswordBox x:Name="PasswordBox"
+                         Height="30"
+                         Padding="5"
+                         Background="White"
+                         BorderBrush="#CCC"/>
+        </StackPanel>
 
-        <!-- Error Message - Now has its own dedicated row -->
-        <TextBlock x:Name="ErrorMessage" 
-                   Foreground="Red" 
+        <!-- Error Message -->
+        <TextBlock x:Name="ErrorMessage"
+                   Foreground="Red"
                    Visibility="Collapsed"
-                   Grid.Row="5" 
+                   Grid.Row="3"
                    TextWrapping="Wrap"
-                   HorizontalAlignment="Center" 
-                   Margin="0,0,0,10"
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,10"
                    TextAlignment="Center"
                    MaxWidth="300"/>
 
         <!-- Buttons -->
-        <StackPanel Orientation="Horizontal" 
-                    Grid.Row="6" 
-                    HorizontalAlignment="Center"
-                    Margin="0,10,0,0">
-            <Button Content="Login" 
-                    Width="100" 
-                    Height="30" 
-                    Margin="0,0,10,0" 
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Content="Login"
+                    Width="100"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Background="#4CAF50"
+                    Foreground="White"
+                    FontWeight="Bold"
                     Click="LoginButton_Click"/>
-            <Button Content="Register" 
-                    Width="100" 
-                    Height="30" 
+            <Button Content="Register"
+                    Width="100"
+                    Height="35"
+                    Background="#2196F3"
+                    Foreground="White"
+                    FontWeight="Bold"
                     Click="RegisterButton_Click"/>
         </StackPanel>
     </Grid>

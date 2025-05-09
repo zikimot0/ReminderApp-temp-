@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SQLite;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace ReminderApp
@@ -16,40 +16,11 @@ namespace ReminderApp
         {
             try
             {
-                using (var connection = DatabaseHelper.GetConnection())
-                {
-                    connection.Open();
+                // Fetch all users from the database
+                List<User> users = DatabaseHelper.GetAllUsers();
 
-                    // First check if CreatedAt column exists
-                    bool hasCreatedAt = false;
-                    string checkColumn = "PRAGMA table_info(Users)";
-                    using (var cmd = new SQLiteCommand(checkColumn, connection))
-                    {
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                if (reader["name"].ToString() == "CreatedAt")
-                                {
-                                    hasCreatedAt = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    // Build query based on available columns
-                    string query = hasCreatedAt
-                        ? "SELECT Email, CreatedAt FROM Users WHERE Email != 'admin@gwapo.com'"
-                        : "SELECT Email, 'Unknown' AS CreatedAt FROM Users WHERE Email != 'admin@gwapo.com'";
-
-                    using (var adapter = new SQLiteDataAdapter(query, connection))
-                    {
-                        var dt = new System.Data.DataTable();
-                        adapter.Fill(dt);
-                        UsersDataGrid.ItemsSource = dt.DefaultView;
-                    }
-                }
+                // Bind the users to the ListBox
+                UsersListBox.ItemsSource = users;
             }
             catch (Exception ex)
             {
@@ -58,54 +29,40 @@ namespace ReminderApp
             }
         }
 
-        private void DeleteUser_Click(object sender, RoutedEventArgs e)
+        private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
         {
-            if (UsersDataGrid.SelectedItem == null)
+            // Get the selected user
+            User selectedUser = (User)UsersListBox.SelectedItem;
+
+            if (selectedUser == null)
             {
-                MessageBox.Show("Please select a user to delete", "Warning",
+                MessageBox.Show("Please select a user to delete.", "Error",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var selectedRow = (System.Data.DataRowView)UsersDataGrid.SelectedItem;
-            string email = selectedRow["Email"].ToString();
-
-            var result = MessageBox.Show($"Delete user '{email}' and all their reminders?",
-                "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var result = MessageBox.Show($"Are you sure you want to delete user '{selectedUser.Email}'?",
+                "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    using (var connection = DatabaseHelper.GetConnection())
-                    {
-                        connection.Open();
-                        string deleteQuery = "DELETE FROM Users WHERE Email = @Email";
-                        using (var cmd = new SQLiteCommand(deleteQuery, connection))
-                        {
-                            cmd.Parameters.AddWithValue("@Email", email);
-                            int affected = cmd.ExecuteNonQuery();
+                    // Delete the user from the database
+                    DatabaseHelper.DeleteUser(selectedUser.Id);
 
-                            if (affected > 0)
-                            {
-                                MessageBox.Show("User deleted successfully", "Success",
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                                LoadUsers(); // Refresh the list
-                            }
-                        }
-                    }
+                    // Reload the user list
+                    LoadUsers();
+
+                    MessageBox.Show("User deleted successfully.", "Success",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Deletion failed: {ex.Message}", "Error",
+                    MessageBox.Show($"Error deleting user: {ex.Message}", "Error",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
