@@ -1,84 +1,70 @@
 ﻿using System;
 using System.IO;
 using System.Media;
-using System.Threading;
-using System.Windows;
+using System.Reflection;
 
 namespace ReminderApp
 {
-    public partial class App : Application
+    public partial class App
     {
-        public static void PlayReminderSound()
+        private static SoundPlayer? _player;
+
+        //for custom alarm sound
+        private static readonly string AlarmsDirectory = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "ReminderApp",
+            "CustomAlarms"
+        );
+
+        static App()
+        {
+            Directory.CreateDirectory(AlarmsDirectory);
+        }
+
+        // In case you need to display available alarms.
+        public static string[] AvailableAlarms => Directory.GetFiles(AlarmsDirectory, "*.wav");
+
+
+        public static void PlayReminderSound(string? selectedAlarm = null)
         {
             try
             {
-                // Use the System.Media.SoundPlayer to play a custom sound
-                string soundPath = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    "alarm.wav" // Replace with your custom sound file
-                );
-
-                if (File.Exists(soundPath))
+                // If a custom alarm is selected, play it
+                if (!string.IsNullOrEmpty(selectedAlarm) && File.Exists(selectedAlarm))
                 {
-                    SoundPlayer player = new SoundPlayer(soundPath);
-                    player.Play(); // Play the sound asynchronously
+                    _player = new SoundPlayer(selectedAlarm);
+                    _player.PlayLooping();
                 }
                 else
                 {
-                    // Log that the alarm.wav file is missing
-                    Console.WriteLine("alarm.wav file not found. Playing Mario Theme as fallback.");
-                    PlayMarioTheme();
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the error and play the Mario theme as a fallback
-                Console.WriteLine($"Error playing sound: {ex.Message}. Playing Mario Theme as fallback.");
-                PlayMarioTheme();
-            }
-        }
 
-        public static void PlayMarioTheme()
-        {
-            try
-            {
-                // Debugging: Confirm the method is called
-                Console.WriteLine("Playing Mario Theme...");
-
-                // Mario Theme melody using Console.Beep
-                int[] notes = {
-                    659, 659, 0, 659, 0, 523, 659, 0, 784, 0, 0, 0, 392, 0, 0, 0, // First phrase
-                    523, 0, 392, 0, 330, 0, 440, 494, 466, 440, 0, 392, 659, 784, 880, 0, // Second phrase
-                    698, 784, 0, 659, 523, 587, 494, 0, 523, 392, 330, 440, 494, 466, 440 // Third phrase
-                };
-
-                int[] durations = {
-                    125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, // First phrase
-                    125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, // Second phrase
-                    125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125 // Third phrase
-                };
-
-                // Play the Mario Theme
-                for (int i = 0; i < notes.Length; i++)
-                {
-                    if (notes[i] == 0)
+                    // Built in nato btw, kasama na sa exe file so di na required maglagay ng custom alarm sound
+                    var assembly = Assembly.GetExecutingAssembly();
+                    const string resourceName = "ReminderApp.Assets.lofi-alarm-clock.wav";
+                    using var stream = assembly.GetManifestResourceStream(resourceName);
+                    if (stream != null)
                     {
-                        // Rest (silence)
-                        Thread.Sleep(durations[i]);
+                        _player = new SoundPlayer(stream);
+                        _player.PlayLooping();
                     }
                     else
                     {
-                        // Play the note
-                        Console.Beep(notes[i], durations[i]);
+                        Console.WriteLine("Default alarm sound not found.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Handle errors during Mario Theme playback
-                Console.WriteLine($"Error playing Mario Theme: {ex.Message}");
-                MessageBox.Show($"Error playing Mario Theme: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Console.WriteLine($"Error playing sound: {ex.Message}.");
             }
         }
+
+
+        public static void StopReminderSound()
+        {
+            _player?.Stop();
+            _player = null;
+        }
+
     }
 }

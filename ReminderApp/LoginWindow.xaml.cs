@@ -14,7 +14,7 @@ namespace ReminderApp
 
         public LoginWindow()
         {
-            DatabaseHelper.InitializeDatabase(); // Ensure database is initialized
+            DatabaseHelper.InitializeDatabase();
             InitializeComponent();
             EmailTextBox.Focus(); // Focus on email field when window loads
         }

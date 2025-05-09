@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ReminderApp
 {
@@ -17,8 +18,34 @@ namespace ReminderApp
             // Set default time to current time
             TimeTextBox.Text = DateTime.Now.ToString("HH:mm");
             ReminderCalendar.SelectedDate = DateTime.Today;
+            LoadAvailableAlarms();
         }
 
+        private void LoadAvailableAlarms()
+        {
+            try
+            {
+                string[] alarms = App.AvailableAlarms;
+                foreach (string alarmPath in alarms)
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(alarmPath);
+                    AlarmComboBox.Items.Add(new ComboBoxItem
+                    {
+                        Content = fileName,
+                        Tag = alarmPath
+                    });
+                }
+
+                // Set the default selection to the first item (no sound)
+                if (AlarmComboBox.Items.Count > 0)
+                    AlarmComboBox.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading alarms: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void SaveReminderButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -52,13 +79,19 @@ namespace ReminderApp
                     return;
                 }
 
+                string? selectedAlarmPath = null;
+                if (AlarmComboBox.SelectedItem is ComboBoxItem selectedItem)
+                {
+                    selectedAlarmPath = selectedItem.Tag?.ToString();
+                }
+
                 // Save to database
                 using (var connection = DatabaseHelper.GetConnection())
                 {
                     connection.Open();
                     string query = @"
-                        INSERT INTO Reminders (UserId, DateTime, Subject, Description)
-                        VALUES (@UserId, @DateTime, @Subject, @Description)";
+                        INSERT INTO Reminders (UserId, DateTime, Subject, Description, AlarmPath)
+                        VALUES (@UserId, @DateTime, @Subject, @Description, @AlarmPath)";
 
                     using (var command = new SQLiteCommand(query, connection))
                     {
@@ -66,6 +99,7 @@ namespace ReminderApp
                         command.Parameters.AddWithValue("@DateTime", reminderDateTime.ToString("o"));
                         command.Parameters.AddWithValue("@Subject", SubjectTextBox.Text.Trim());
                         command.Parameters.AddWithValue("@Description", DescriptionTextBox.Text.Trim());
+                        command.Parameters.AddWithValue("@AlarmPath", selectedAlarmPath);
                         command.ExecuteNonQuery();
                     }
                 }
