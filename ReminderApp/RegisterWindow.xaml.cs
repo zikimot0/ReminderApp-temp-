@@ -13,17 +13,28 @@ namespace ReminderApp
         }
 
 
-
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             string email = EmailTextBox.Text.Trim();
             string password = PasswordBox.Password.Trim();
 
+            // Validate email and password
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show("Email and Password cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+
+            // Check password length
+            if (password.Length < 6)
+            {
+                MessageBox.Show("Password must be at least 6 characters long.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; // Stop further execution
             }
 
             try
@@ -65,5 +76,6 @@ namespace ReminderApp
                 MessageBox.Show($"Registration failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }
