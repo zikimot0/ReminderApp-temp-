@@ -91,15 +91,7 @@
                         Visibility="Collapsed"
                         Margin="0,0,0,10"
                         Click="ManageUsersButton_Click"/>
-                <Button x:Name="ViewLoginLogsButton"
-                        Content="View Login Logs"
-                        Height="40"
-                        Background="#FFC107"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        Visibility="Collapsed"
-                        Margin="0,0,0,10"
-                        Click="ViewLoginLogsButton_Click"/>
+      
                 <Button x:Name="LogoutButton"
                         Content="Logout"
                         Height="40"

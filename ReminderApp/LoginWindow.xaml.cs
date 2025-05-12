@@ -7,10 +7,7 @@ namespace ReminderApp
 {
     public partial class LoginWindow : Window
     {
-        // Regular expression for email validation
-        private readonly Regex _validEmailRegex = new Regex(
-            @"^(?!(admin@gwapo\.com)$)[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|aol\.com|mail\.com|yandex\.com|zoho\.com|\w+\.\w+)$",
-            RegexOptions.IgnoreCase);
+        
 
         public LoginWindow()
         {
@@ -18,6 +15,8 @@ namespace ReminderApp
             InitializeComponent();
             EmailTextBox.Focus(); // Focus on email field when window loads
         }
+
+        
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -42,15 +41,7 @@ namespace ReminderApp
                 return;
             }
 
-            // Email format validation (only for non-admin accounts)
-            if (!email.Equals("admin@gwapo.com", StringComparison.OrdinalIgnoreCase) &&
-                !_validEmailRegex.IsMatch(email))
-            {
-                ShowError("Please use a valid email address from common providers.\nExamples: user@gmail.com, user@yahoo.com");
-                EmailTextBox.Focus();
-                EmailTextBox.SelectAll();
-                return;
-            }
+            
 
             try
             {

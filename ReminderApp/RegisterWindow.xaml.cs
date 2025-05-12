@@ -1,51 +1,93 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace ReminderApp
 {
     public partial class RegisterWindow : Window
     {
+
+        // Regular expression for email validation
+        private readonly Regex _validEmailRegex = new Regex(
+            @"^(?!(admin@gwapo\.com)$)[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|aol\.com|mail\.com|yandex\.com|zoho\.com|\w+\.\w+)$",
+            RegexOptions.IgnoreCase);
+
         public RegisterWindow()
         {
             InitializeComponent();
         }
 
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            new LoginWindow().Show();
             this.Close();
         }
 
+        private void ShowError(string message)
+        {
+            ErrorMessage.Text = message;
+            ErrorMessage.Visibility = Visibility.Visible;
+        }
+
+        private void ClearError()
+        {
+            ErrorMessage.Text = string.Empty;
+            ErrorMessage.Visibility = Visibility.Collapsed;
+        }
+
+
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            ClearError();
+
             string email = EmailTextBox.Text.Trim();
             string password = PasswordBox.Password.Trim();
 
-            // Validate email and password
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            // Validate email   
+            if (string.IsNullOrWhiteSpace(email) )
             {
-                MessageBox.Show("Email and Password cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowError("Please Enter Your Email.");
+                
                 return;
             }
 
-            // Check password length
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                ShowError("Please Enter Your Password.");
+                
+                return;
+            }
+
+            
             if (password.Length < 6)
             {
-                MessageBox.Show("Password must be at least 6 characters long.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; // Stop further execution
+                ShowError("Password must be at least 6 characters long.");
+                
+                return;
+            }
+
+            // Email format validation (only for non-admin accounts)
+            if (!email.Equals("admin@gwapo.com", StringComparison.OrdinalIgnoreCase) && !_validEmailRegex.IsMatch(email))
+
+            {
+                ShowError("Please use a valid email address from common providers.");
+                EmailTextBox.Focus();
+                EmailTextBox.SelectAll();
+                return;
             }
 
             try
             {
+                // Hash the password
                 string hashedPassword = PasswordHasher.HashPassword(password);
 
                 using (var connection = DatabaseHelper.GetConnection())
                 {
                     connection.Open();
 
-                    // Check if user exists
+                    // Check if user exists  
                     string checkUser = "SELECT COUNT(*) FROM Users WHERE Email = @Email";
                     using (var cmd = new SQLiteCommand(checkUser, connection))
                     {
@@ -57,7 +99,7 @@ namespace ReminderApp
                         }
                     }
 
-                    // Insert new user
+                    // Insert new user  
                     string insertUser = "INSERT INTO Users (Email, Password) VALUES (@Email, @Password)";
                     using (var cmd = new SQLiteCommand(insertUser, connection))
                     {
@@ -76,6 +118,5 @@ namespace ReminderApp
                 MessageBox.Show($"Registration failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }

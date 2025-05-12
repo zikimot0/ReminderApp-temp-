@@ -8,6 +8,7 @@
     <RootNamespace>ReminderApp</RootNamespace>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <Nullable>enable</Nullable>
+    <ErrorReport>send</ErrorReport>
   </PropertyGroup>
 
   <ItemGroup>

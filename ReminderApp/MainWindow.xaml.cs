@@ -20,7 +20,7 @@ namespace ReminderApp
 
             if (_userEmail == "admin@gwapo.com")
             {
-                ViewLoginLogsButton.Visibility = Visibility.Visible;
+                
                 ManageUsersButton.Visibility = Visibility.Visible;
             }
 
@@ -287,62 +287,6 @@ namespace ReminderApp
             this.Close();
         }
 
-        private void ViewLoginLogsButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var connection = DatabaseHelper.GetConnection())
-                {
-                    connection.Open();
-
-                    // Check if LoginLogs table exists
-                    bool tableExists = false;
-                    string checkTable = "SELECT name FROM sqlite_master WHERE type='table' AND name='LoginLogs'";
-                    using (var cmd = new SQLiteCommand(checkTable, connection))
-                    {
-                        tableExists = (cmd.ExecuteScalar() != null);
-                    }
-
-                    if (!tableExists)
-                    {
-                        MessageBox.Show("No login logs available yet", "Information",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
-                    }
-
-                    // Get logs
-                    string query = "SELECT Email, Timestamp, IsSuccessful FROM LoginLogs ORDER BY Timestamp DESC";
-                    using (var cmd = new SQLiteCommand(query, connection))
-                    {
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            StringBuilder logs = new StringBuilder();
-                            while (reader.Read())
-                            {
-                                logs.AppendLine($"{reader["Timestamp"]}: {reader["Email"]} - " +
-                                                (Convert.ToInt32(reader["IsSuccessful"]) == 1 ? "Success" : "Failed"));
-                            }
-
-                            if (logs.Length == 0)
-                            {
-                                MessageBox.Show("No login records found", "Information",
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                            }
-                            else
-                            {
-                                MessageBox.Show(logs.ToString(), "Login Logs",
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading logs: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
     }
 
     public class Reminder
