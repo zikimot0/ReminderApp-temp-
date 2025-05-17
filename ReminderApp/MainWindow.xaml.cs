@@ -251,15 +251,14 @@ namespace ReminderApp
 
         private void ScheduleReminder(DateTime reminderDateTime, string reminderText)
         {
-            // Use a permanent path, not a temp folder!
-            string exePath = @"C:\Users\Admin\source\repos\ReminderApp\publish\ReminderAlarmApp.exe"; // <-- Update this to your actual published location
+            
+            string exePath = @"C:\Users\Admin\source\repos\ReminderApp\publish\ReminderAlarmApp.exe"; //my folder path
             string time = reminderDateTime.ToString("HH:mm");
             string date = reminderDateTime.ToString("MM/dd/yyyy");
             string taskName = "ReminderApp_Alarm_" + Guid.NewGuid();
 
             // Properly quote the path and arguments
             string arguments = $"/Create /SC ONCE /TN \"{taskName}\" /TR \"\\\"{exePath}\\\" \\\"{reminderText}\\\"\" /ST {time} /SD {date} /F";
-            MessageBox.Show(arguments); // For debugging
             System.Diagnostics.Process.Start("schtasks.exe", arguments);
         }
 
