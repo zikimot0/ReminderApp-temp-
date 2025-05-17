@@ -103,9 +103,15 @@ namespace ReminderApp
                         command.ExecuteNonQuery();
                     }
                 }
-
-                
+                NewReminder = new Reminder
+                {
+                    DateTime =  reminderDateTime,
+                    Subject =   SubjectTextBox.Text.Trim(),
+                    Description =   DescriptionTextBox.Text.Trim(),
+                };
+                this.DialogResult = true;
                 this.Close();
+
             }
             catch (Exception ex)
             {
@@ -135,5 +141,9 @@ namespace ReminderApp
                 return -1;
             }
         }
+
+        public Reminder NewReminder { get; private set; }
+
+
     }
 }

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp", "ReminderApp\ReminderApp.csproj", "{929B63E5-B0EF-4FEE-A625-47A90E00B968}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderAlarmApp", "ReminderAlarmApp\ReminderAlarmApp.csproj", "{5A778C6F-9B9F-4854-B59B-2ED3CB1BEF62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{929B63E5-B0EF-4FEE-A625-47A90E00B968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{929B63E5-B0EF-4FEE-A625-47A90E00B968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{929B63E5-B0EF-4FEE-A625-47A90E00B968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A778C6F-9B9F-4854-B59B-2ED3CB1BEF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A778C6F-9B9F-4854-B59B-2ED3CB1BEF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A778C6F-9B9F-4854-B59B-2ED3CB1BEF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A778C6F-9B9F-4854-B59B-2ED3CB1BEF62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

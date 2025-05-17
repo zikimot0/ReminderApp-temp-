@@ -38,7 +38,7 @@ namespace ReminderApp
                 else
                 {
 
-                    // Built in nato btw, kasama na sa exe file so di na required maglagay ng custom alarm sound
+                    //built in alarm sound
                     var assembly = Assembly.GetExecutingAssembly();
                     const string resourceName = "ReminderApp.Assets.lofi-alarm-clock.wav";
                     using var stream = assembly.GetManifestResourceStream(resourceName);

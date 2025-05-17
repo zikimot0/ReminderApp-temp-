@@ -31,6 +31,7 @@ namespace ReminderApp
             {
                 ShowError("Please enter your email address.");
                 EmailTextBox.Focus();
+                
                 return;
             }
 
@@ -38,6 +39,7 @@ namespace ReminderApp
             {
                 ShowError("Please enter your password.");
                 PasswordBox.Focus();
+                
                 return;
             }
 

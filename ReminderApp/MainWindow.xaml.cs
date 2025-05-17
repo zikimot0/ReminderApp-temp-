@@ -34,6 +34,8 @@ namespace ReminderApp
             InitializeAlarmTimer();
         }
 
+
+
         private void EnsureDatabaseSchema()
         {
             try
@@ -71,7 +73,9 @@ namespace ReminderApp
             _alarmTimer.Start();
         }
 
-        //Edited by chat gpt lol
+       
+
+
         private void CheckForDueReminders(object sender, EventArgs e)
         {
             try
@@ -230,10 +234,36 @@ namespace ReminderApp
 
         private void AddReminderButton_Click(object sender, RoutedEventArgs e)
         {
-            ReminderWindow reminderWindow = new ReminderWindow(_userEmail);
-            reminderWindow.ShowDialog();
-            LoadReminders(); // Refresh after adding
+            var reminderWindow = new ReminderWindow(_userEmail);
+            var result = reminderWindow.ShowDialog();
+
+            // Check if the user actually added a reminder
+            if (result == true && reminderWindow.NewReminder != null)
+            {
+                LoadReminders(); // Refresh after adding
+
+                // Use the actual values from the new reminder
+                ScheduleReminder(reminderWindow.NewReminder.DateTime,
+                                 $"{reminderWindow.NewReminder.Subject}: {reminderWindow.NewReminder.Description}");
+            }
         }
+
+
+        private void ScheduleReminder(DateTime reminderDateTime, string reminderText)
+        {
+            // Use a permanent path, not a temp folder!
+            string exePath = @"C:\Users\Admin\source\repos\ReminderApp\publish\ReminderAlarmApp.exe"; // <-- Update this to your actual published location
+            string time = reminderDateTime.ToString("HH:mm");
+            string date = reminderDateTime.ToString("MM/dd/yyyy");
+            string taskName = "ReminderApp_Alarm_" + Guid.NewGuid();
+
+            // Properly quote the path and arguments
+            string arguments = $"/Create /SC ONCE /TN \"{taskName}\" /TR \"\\\"{exePath}\\\" \\\"{reminderText}\\\"\" /ST {time} /SD {date} /F";
+            MessageBox.Show(arguments); // For debugging
+            System.Diagnostics.Process.Start("schtasks.exe", arguments);
+        }
+
+
 
         private void DeleteReminderButton_Click(object sender, RoutedEventArgs e)
         {

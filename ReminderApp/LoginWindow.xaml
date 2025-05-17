@@ -3,8 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Login" Height="400" Width="400"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Background="#F3F4F6">
+        ResizeMode="NoResize" ForceCursor="True">
+    <Window.Resources>
+        <!-- Style for all TextBoxes -->
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <!-- Style for all PasswordBoxes -->
+        <Style TargetType="PasswordBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <!-- Style for all Buttons -->
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <!-- Style for Login Button -->
+        <Style x:Key="LoginButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#4CAF50"/>
+        </Style>
+        <!-- Style for Register Button -->
+        <Style x:Key="RegisterButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <!-- Style for section labels -->
+        <Style x:Key="SectionLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#555"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="1"/>
+            <GradientStop Color="#FF4C4E56"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,40 +65,25 @@
 
         <!-- Title -->
         <TextBlock Text="Login to Reminder App"
-                   FontSize="24"
+                   FontSize="16"
                    FontWeight="Bold"
-                   Foreground="#333"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,20"
-                   Grid.Row="0"/>
+                   Grid.Row="0" Width="176" Foreground="#FFB9B9B9"/>
 
         <!-- Email Input -->
         <StackPanel Grid.Row="1" Margin="0,10,0,0">
             <TextBlock Text="Email"
-                       FontSize="14"
-                       FontWeight="SemiBold"
-                       Foreground="#555"
-                       Margin="0,0,0,5"/>
+                       Style="{StaticResource SectionLabelStyle}" Foreground="#FFDCD5D5"/>
             <TextBox x:Name="EmailTextBox"
-                     Height="30"
-                     Padding="5"
-                     Background="White"
-                     BorderBrush="#CCC"
-                     ToolTip="Enter your email address (e.g., user@gmail.com)"/>
+                     ToolTip="Enter your email address (e.g., user@gmail.com)" SelectionBrush="#FFEFF0F1" SelectionTextBrush="White" Foreground="#FFF1ECEC" Background="#FF3D3F45" Opacity="0.5" BorderBrush="#FFF5F2F2"/>
         </StackPanel>
 
         <!-- Password Input -->
         <StackPanel Grid.Row="2" Margin="0,10,0,0">
             <TextBlock Text="Password"
-                       FontSize="14"
-                       FontWeight="SemiBold"
-                       Foreground="#555"
-                       Margin="0,0,0,5"/>
-            <PasswordBox x:Name="PasswordBox"
-                         Height="30"
-                         Padding="5"
-                         Background="White"
-                         BorderBrush="#CCC"/>
+                       Style="{StaticResource SectionLabelStyle}" Foreground="#FFE2D3D3"/>
+            <PasswordBox x:Name="PasswordBox" Background="#FF3D3F45" SelectionBrush="White" Foreground="#FFE8DEDE" Opacity="0.5"/>
         </StackPanel>
 
         <!-- Error Message -->
@@ -66,20 +100,13 @@
         <!-- Buttons -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
             <Button Content="Login"
-                    Width="100"
-                    Height="35"
-                    Margin="0,0,10,0"
-                    Background="#4CAF50"
-                    Foreground="White"
-                    FontWeight="Bold"
-                    Click="LoginButton_Click"/>
+                    
+                    Style="{StaticResource LoginButtonStyle}"
+                    Click="LoginButton_Click" Background="#FF115218"/>
             <Button Content="Register"
-                    Width="100"
-                    Height="35"
-                    Background="#2196F3"
-                    Foreground="White"
-                    FontWeight="Bold"
-                    Click="RegisterButton_Click"/>
+                    Style="{StaticResource RegisterButtonStyle}"
+                    Click="RegisterButton_Click" Background="#FF195DCC"/>
         </StackPanel>
+        <Image HorizontalAlignment="Left" Height="100" Margin="728,20,0,0" Grid.Row="4" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
