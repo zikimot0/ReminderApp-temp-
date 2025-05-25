@@ -24,13 +24,13 @@ namespace ReminderApp
                 ManageUsersButton.Visibility = Visibility.Visible;
             }
 
-            // Ensure database schema is up-to-date
+            // ineensure the database schema is up to date
             EnsureDatabaseSchema();
 
-            // Load reminders
+            //literal na niloload ung reminders
             LoadReminders();
 
-            // Initialize and start the alarm timer
+            // literal na iniinitialize ung alarm timer
             InitializeAlarmTimer();
         }
 
@@ -44,7 +44,7 @@ namespace ReminderApp
                 {
                     connection.Open();
 
-                    // Add Triggered column to Reminders table if it doesn't exist
+                    //inaadd ang Triggered column kung wala pa
                     string query = "ALTER TABLE Reminders ADD COLUMN Triggered INTEGER DEFAULT 0";
                     using (var command = new SQLiteCommand(query, connection))
                     {
@@ -54,7 +54,7 @@ namespace ReminderApp
             }
             catch (SQLiteException ex) when (ex.Message.Contains("duplicate column name"))
             {
-                // Column already exists, ignore the error
+                // kung nageexist na ang column, ignore the error
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace ReminderApp
         {
             _alarmTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(1) // Check every 1 second para wala delay
+                Interval = TimeSpan.FromSeconds(.05) // Check every somethin seconds para walang delay
             };
             _alarmTimer.Tick += CheckForDueReminders;
             _alarmTimer.Start();

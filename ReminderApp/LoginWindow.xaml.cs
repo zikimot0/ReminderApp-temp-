@@ -13,7 +13,7 @@ namespace ReminderApp
         {
             DatabaseHelper.InitializeDatabase();
             InitializeComponent();
-            EmailTextBox.Focus(); // Focus on email field when window loads
+            EmailTextBox.Focus(); //literal na focus
         }
 
         
@@ -23,10 +23,10 @@ namespace ReminderApp
             string email = EmailTextBox.Text.Trim();
             string password = PasswordBox.Password.Trim();
 
-            // Clear previous error messages
+            // tangalin ang previous error message
             ErrorMessage.Visibility = Visibility.Collapsed;
 
-            // Validation
+            // validate lang kung may laman ba o wala
             if (string.IsNullOrWhiteSpace(email))
             {
                 ShowError("Please enter your email address.");
@@ -47,7 +47,7 @@ namespace ReminderApp
 
             try
             {
-                // Special case for admin (bypass hashing for initial setup)
+                // para lang sa admin
                 if (email == "admin@gwapo.com" && password == "admingwapo")
                 {
                     EnsureAdminExists();
@@ -59,7 +59,7 @@ namespace ReminderApp
                 {
                     connection.Open();
 
-                    // Get user data including password hash
+                    // kinukuha ang password ng user mula sa database n nakahash
                     string getUserQuery = "SELECT Password FROM Users WHERE Email = @Email LIMIT 1";
                     string storedHash = null;
 
@@ -110,13 +110,13 @@ namespace ReminderApp
                 {
                     connection.Open();
 
-                    // Check if admin exists
+                    // Check lang kung buhay si admin
                     string checkAdmin = "SELECT COUNT(*) FROM Users WHERE Email = 'admin@gwapo.com'";
                     using (var cmd = new SQLiteCommand(checkAdmin, connection))
                     {
                         if (Convert.ToInt32(cmd.ExecuteScalar()) == 0)
                         {
-                            // Insert admin with hashed password
+                            // hashed kasi astig
                             string insertAdmin = "INSERT INTO Users (Email, Password) VALUES ('admin@gwapo.com', @Password)";
                             using (var insertCmd = new SQLiteCommand(insertAdmin, connection))
                             {
@@ -130,7 +130,7 @@ namespace ReminderApp
             }
             catch
             {
-                // Silent fail - will try again next login
+                // wala, edi magfafail sya na ko alam basta biglaan or silent
             }
         }
 
@@ -168,7 +168,7 @@ namespace ReminderApp
             }
             catch
             {
-                // Ignore logging errors
+                
             }
         }
 

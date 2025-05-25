@@ -16,10 +16,10 @@ namespace ReminderApp
         {
             try
             {
-                // Fetch all users from the database
+                // kunin ang mga tao sa database
                 List<User> users = DatabaseHelper.GetAllUsers();
 
-                // Bind the users to the ListBox
+                // bind natin sa ListBox
                 UsersListBox.ItemsSource = users;
             }
             catch (Exception ex)
@@ -31,7 +31,7 @@ namespace ReminderApp
 
         private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the selected user
+            // pindutin ung user para patayin
             User selectedUser = (User)UsersListBox.SelectedItem;
 
             if (selectedUser == null)
@@ -48,10 +48,10 @@ namespace ReminderApp
             {
                 try
                 {
-                    // Delete the user from the database
+                    // patayn natin ang user sa database
                     DatabaseHelper.DeleteUser(selectedUser.Id);
 
-                    // Reload the user list
+                    // reload natin para kunwari walang nangyari
                     LoadUsers();
 
                     MessageBox.Show("User deleted successfully.", "Success",

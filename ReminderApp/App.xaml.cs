@@ -9,7 +9,7 @@ namespace ReminderApp
     {
         private static SoundPlayer? _player;
 
-        //for custom alarm sound
+        //para sa custom alarm nyo
         private static readonly string AlarmsDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "ReminderApp",
@@ -21,7 +21,7 @@ namespace ReminderApp
             Directory.CreateDirectory(AlarmsDirectory);
         }
 
-        // In case you need to display available alarms.
+        //if want nyo ung custom alarm, lagay nyo dito na naka wav file
         public static string[] AvailableAlarms => Directory.GetFiles(AlarmsDirectory, "*.wav");
 
 
@@ -29,7 +29,7 @@ namespace ReminderApp
         {
             try
             {
-                // If a custom alarm is selected, play it
+                //pag naselect ung alarm, gagamitin nya ung custom alarm
                 if (!string.IsNullOrEmpty(selectedAlarm) && File.Exists(selectedAlarm))
                 {
                     _player = new SoundPlayer(selectedAlarm);
@@ -38,7 +38,7 @@ namespace ReminderApp
                 else
                 {
 
-                    //built in alarm sound
+                    //ito ung built in alarm sound
                     var assembly = Assembly.GetExecutingAssembly();
                     const string resourceName = "ReminderApp.Assets.lofi-alarm-clock.wav";
                     using var stream = assembly.GetManifestResourceStream(resourceName);

@@ -39,7 +39,7 @@ namespace ReminderApp
             {
                 connection.Open();
 
-                // Existing table creation logic
+                // ito ang aking database hehehe
                 string createUsersTable = @"
 CREATE TABLE IF NOT EXISTS Users (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS Reminders (
     FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
 )";
 
-                // New table for registration
+                // table ng registration ko
                 string createRegistrationTable = @"
 CREATE TABLE IF NOT EXISTS Registration (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Registration (
 
                 using (var command = new SQLiteCommand(connection))
                 {
-                    // Execute existing table creation commands
+                    // ineexicute ang mga table creation commands
                     command.CommandText = createUsersTable;
                     command.ExecuteNonQuery();
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS Registration (
                     command.CommandText = createRemindersTable;
                     command.ExecuteNonQuery();
 
-                    // Execute new table creation command
+                    //same dito
                     command.CommandText = createRegistrationTable;
                     command.ExecuteNonQuery();
                 }

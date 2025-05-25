@@ -25,7 +25,7 @@ namespace ReminderApp
             return $"{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
         }
 
-        // Verify password against stored hash
+        // iverify ang password against the stored hash
         public static bool VerifyPassword(string password, string storedHash)
         {
             string[] parts = storedHash.Split(':');

@@ -9,7 +9,7 @@ namespace ReminderApp
     public partial class RegisterWindow : Window
     {
 
-        // Regular expression for email validation
+        // para d kayo maglogin ng kahit ano
         private readonly Regex _validEmailRegex = new Regex(
             @"^(?!(admin@gwapo\.com)$)[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|protonmail\.com|icloud\.com|aol\.com|mail\.com|yandex\.com|zoho\.com|\w+\.\w+)$",
             RegexOptions.IgnoreCase);
@@ -45,7 +45,7 @@ namespace ReminderApp
             string email = EmailTextBox.Text.Trim();
             string password = PasswordBox.Password.Trim();
 
-            // Validate email   
+            // kung walang laman ang email at password   
             if (string.IsNullOrWhiteSpace(email) )
             {
                 ShowError("Please Enter Your Email.");
@@ -68,7 +68,7 @@ namespace ReminderApp
                 return;
             }
 
-            // Email format validation (only for non-admin accounts)
+            // para sa mga hindi admin na email
             if (!email.Equals("admin@gwapo.com", StringComparison.OrdinalIgnoreCase) && !_validEmailRegex.IsMatch(email))
 
             {
@@ -80,14 +80,14 @@ namespace ReminderApp
 
             try
             {
-                // Hash the password
+                //ihashed natin para astig
                 string hashedPassword = PasswordHasher.HashPassword(password);
 
                 using (var connection = DatabaseHelper.GetConnection())
                 {
                     connection.Open();
 
-                    // Check if user exists  
+                    // kung meron ba na existing user sa database 
                     string checkUser = "SELECT COUNT(*) FROM Users WHERE Email = @Email";
                     using (var cmd = new SQLiteCommand(checkUser, connection))
                     {
@@ -99,7 +99,7 @@ namespace ReminderApp
                         }
                     }
 
-                    // Insert new user  
+                    // nagiinsert ng new user 
                     string insertUser = "INSERT INTO Users (Email, Password) VALUES (@Email, @Password)";
                     using (var cmd = new SQLiteCommand(insertUser, connection))
                     {

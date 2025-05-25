@@ -15,7 +15,7 @@ namespace ReminderApp
             InitializeComponent();
             _userEmail = userEmail;
 
-            // Set default time to current time
+            // sinesetang default time sa current time
             TimeTextBox.Text = DateTime.Now.ToString("HH:mm");
             ReminderCalendar.SelectedDate = DateTime.Today;
             LoadAvailableAlarms();
