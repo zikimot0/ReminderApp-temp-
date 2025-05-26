@@ -29,40 +29,6 @@ namespace ReminderApp
             }
         }
 
-        private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
-        {
-            // pindutin ung user para patayin
-            User selectedUser = (User)UsersListBox.SelectedItem;
-
-            if (selectedUser == null)
-            {
-                MessageBox.Show("Please select a user to delete.", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            var result = MessageBox.Show($"Are you sure you want to delete user '{selectedUser.Email}'?",
-                "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                try
-                {
-                    // patayn natin ang user sa database
-                    DatabaseHelper.DeleteUser(selectedUser.Id);
-
-                    // reload natin para kunwari walang nangyari
-                    LoadUsers();
-
-                    MessageBox.Show("User deleted successfully.", "Success",
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting user: {ex.Message}", "Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
+        
     }
 }

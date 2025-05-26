@@ -37,7 +37,7 @@ namespace ReminderApp
                     });
                 }
 
-                // Set the default selection to the first item (no sound)
+                // Set the default selection to the first item (lofi)
                 if (AlarmComboBox.Items.Count > 0)
                     AlarmComboBox.SelectedIndex = 0;
             }
@@ -98,7 +98,7 @@ namespace ReminderApp
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@UserId", userId);
-                        command.Parameters.AddWithValue("@DateTime", reminderDateTime.ToString("o"));
+                        command.Parameters.AddWithValue("@DateTime", reminderDateTime.ToString(""));
                         command.Parameters.AddWithValue("@Subject", SubjectTextBox.Text.Trim());
                         command.Parameters.AddWithValue("@Description", DescriptionTextBox.Text.Trim());
                         command.Parameters.AddWithValue("@AlarmPath", selectedAlarmPath);
