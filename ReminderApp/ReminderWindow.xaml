@@ -58,22 +58,117 @@
         </StackPanel>
 
         <!--  Time Input  -->
+        <!--  Time Input  -->
         <StackPanel Grid.Row="2" Margin="0,10,0,0">
             <TextBlock
-                FontSize="14"
-                FontWeight="SemiBold"
-                Foreground="#FFEDE9E9"
-                Margin="0,0,0,5"
-                Text="Time (HH:mm)" />
-            <TextBox
-                BorderBrush="#D1D5DB"
-                BorderThickness="1"
-                Height="35"
-                Margin="0,0,0,10"
-                Padding="5"
-                ToolTip="Enter time in HH:mm format (e.g., 14:30)"
-                x:Name="TimeTextBox" Background="#FF525252" />
+        FontSize="14"
+        FontWeight="SemiBold"
+        Foreground="#FFEDE9E9"
+        Margin="0,0,0,5"
+        Text="Select Time" />
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <ComboBox x:Name="HourComboBox"
+                  Width="60"
+                  Margin="0,0,10,0"
+                  Background="#FF3C3C3C"
+                  VerticalContentAlignment="Center">
+                    <!-- Populate hours 00 - 23 -->
+                    <ComboBoxItem Content="00" />
+                    <ComboBoxItem Content="01" />
+                    <ComboBoxItem Content="02" />
+                    <ComboBoxItem Content="03" />
+                    <ComboBoxItem Content="04" />
+                    <ComboBoxItem Content="05" />
+                    <ComboBoxItem Content="06" />
+                    <ComboBoxItem Content="07" />
+                    <ComboBoxItem Content="08" />
+                    <ComboBoxItem Content="09" />
+                    <ComboBoxItem Content="10" />
+                    <ComboBoxItem Content="11" />
+                    <ComboBoxItem Content="12" />
+                    <ComboBoxItem Content="13" />
+                    <ComboBoxItem Content="14" />
+                    <ComboBoxItem Content="15" />
+                    <ComboBoxItem Content="16" />
+                    <ComboBoxItem Content="17" />
+                    <ComboBoxItem Content="18" />
+                    <ComboBoxItem Content="19" />
+                    <ComboBoxItem Content="20" />
+                    <ComboBoxItem Content="21" />
+                    <ComboBoxItem Content="22" />
+                    <ComboBoxItem Content="23" />
+                </ComboBox>
+                <TextBlock Text=":" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+                <ComboBox x:Name="MinuteComboBox"
+                  Width="60"
+                  Margin="10,0,0,0"
+                  Background="#FF3C3C3C"
+                  VerticalContentAlignment="Center">
+                    <!-- Populate minutes 00 - 59 -->
+                    <ComboBoxItem Content="00" />
+                    <ComboBoxItem Content="01" />
+                    <ComboBoxItem Content="02" />
+                    <ComboBoxItem Content="03" />
+                    <ComboBoxItem Content="04" />
+                    <ComboBoxItem Content="05" />
+                    <ComboBoxItem Content="06" />
+                    <ComboBoxItem Content="07" />
+                    <ComboBoxItem Content="08" />
+                    <ComboBoxItem Content="09" />
+                    <ComboBoxItem Content="10" />
+                    <ComboBoxItem Content="11" />
+                    <ComboBoxItem Content="12" />
+                    <ComboBoxItem Content="13" />
+                    <ComboBoxItem Content="14" />
+                    <ComboBoxItem Content="15" />
+                    <ComboBoxItem Content="16" />
+                    <ComboBoxItem Content="17" />
+                    <ComboBoxItem Content="18" />
+                    <ComboBoxItem Content="19" />
+                    <ComboBoxItem Content="20" />
+                    <ComboBoxItem Content="21" />
+                    <ComboBoxItem Content="22" />
+                    <ComboBoxItem Content="23" />
+                    <ComboBoxItem Content="24" />
+                    <ComboBoxItem Content="25" />
+                    <ComboBoxItem Content="26" />
+                    <ComboBoxItem Content="27" />
+                    <ComboBoxItem Content="28" />
+                    <ComboBoxItem Content="29" />
+                    <ComboBoxItem Content="30" />
+                    <ComboBoxItem Content="31" />
+                    <ComboBoxItem Content="32" />
+                    <ComboBoxItem Content="33" />
+                    <ComboBoxItem Content="34" />
+                    <ComboBoxItem Content="35" />
+                    <ComboBoxItem Content="36" />
+                    <ComboBoxItem Content="37" />
+                    <ComboBoxItem Content="38" />
+                    <ComboBoxItem Content="39" />
+                    <ComboBoxItem Content="40" />
+                    <ComboBoxItem Content="41" />
+                    <ComboBoxItem Content="42" />
+                    <ComboBoxItem Content="43" />
+                    <ComboBoxItem Content="44" />
+                    <ComboBoxItem Content="45" />
+                    <ComboBoxItem Content="46" />
+                    <ComboBoxItem Content="47" />
+                    <ComboBoxItem Content="48" />
+                    <ComboBoxItem Content="49" />
+                    <ComboBoxItem Content="50" />
+                    <ComboBoxItem Content="51" />
+                    <ComboBoxItem Content="52" />
+                    <ComboBoxItem Content="53" />
+                    <ComboBoxItem Content="54" />
+                    <ComboBoxItem Content="55" />
+                    <ComboBoxItem Content="56" />
+                    <ComboBoxItem Content="57" />
+                    <ComboBoxItem Content="58" />
+                    <ComboBoxItem Content="59" />
+                </ComboBox>
+            </StackPanel>
         </StackPanel>
+
 
         <!--  Subject Input  -->
         <StackPanel Grid.Row="3" Margin="0,10,0,0">
@@ -145,28 +240,33 @@
             Orientation="Horizontal">
 
             <Button
-                
-                Background="#10B981"
-                BorderBrush="#059669"
-                BorderThickness="0,0,0,0"
-                Click="SaveReminderButton_Click"
-                Content="Save"
-                Cursor="Hand"
-                FontWeight="Bold"
-                Foreground="White"
-                Height="40"
-                Margin="0,0,10,0"
-                Width="120" Padding="1,1,1,1" UseLayoutRounding="False" RenderTransformOrigin="0,0" ClickMode="Press" >
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform X="-2"/>
-                    </TransformGroup>
-                </Button.RenderTransform>
+    Background="#10B981"
+    BorderBrush="#059669"
+    BorderThickness="0"
+    Click="SaveReminderButton_Click"
+    Content="Save"
+    Cursor="Hand"
+    FontWeight="Bold"
+    Foreground="White"
+    Height="40"
+    Width="120"
+    Padding="1"
+    Margin="0,0,10,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
 
+
         </StackPanel>
+        <ComboBox HorizontalAlignment="Left" Margin="688,32,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

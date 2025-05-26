@@ -16,8 +16,9 @@ namespace ReminderApp
             _userEmail = userEmail;
 
             // sinesetang default time sa current time
-            TimeTextBox.Text = DateTime.Now.ToString("HH:mm");
-            ReminderCalendar.SelectedDate = DateTime.Today;
+            HourComboBox.SelectedIndex = DateTime.Now.Hour;
+            MinuteComboBox.SelectedIndex = DateTime.Now.Minute;
+             ReminderCalendar.SelectedDate = DateTime.Today;
             LoadAvailableAlarms();
         }
 
@@ -50,22 +51,23 @@ namespace ReminderApp
         {
             try
             {
-                // Validate inputs
-                if (string.IsNullOrWhiteSpace(TimeTextBox.Text) ||
-                    string.IsNullOrWhiteSpace(SubjectTextBox.Text))
+                if (HourComboBox.SelectedItem is not ComboBoxItem hourItem ||
+     MinuteComboBox.SelectedItem is not ComboBoxItem minuteItem ||
+     string.IsNullOrWhiteSpace(SubjectTextBox.Text))
                 {
                     MessageBox.Show("Time and Subject are required!", "Error",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                // Parse time
-                if (!TimeSpan.TryParse(TimeTextBox.Text, out TimeSpan reminderTime))
+                string timeText = $"{hourItem.Content}:{minuteItem.Content}";
+                if (!TimeSpan.TryParse(timeText, out TimeSpan reminderTime))
                 {
-                    MessageBox.Show("Invalid time format. Please use HH:mm (e.g., 14:30)", "Error",
+                    MessageBox.Show("Invalid time selection.", "Error",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
 
                 // Combine date and time
                 DateTime reminderDateTime = (ReminderCalendar.SelectedDate ?? DateTime.Today).Date + reminderTime;
