@@ -2,8 +2,36 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Reminder App" Height="634" Width="800"
+        MinWidth="600" MinHeight="500"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}">
+        ResizeMode="CanResize"
+        Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}">
+
+    <Window.Resources>
+        <!-- Rounded Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="10"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="17*"/>
@@ -78,43 +106,35 @@
             <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Top">
                 <Button x:Name="AddReminderButton"
                         Content="Add Reminder"
-                        Height="40"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        Margin="0,0,0,10"
-                        Click="AddReminderButton_Click" Background="#FF357927" Padding="1,1,1,1"/>
+                        Background="#FF357927"
+                        Click="AddReminderButton_Click"/>
                 <Button x:Name="DeleteReminderButton"
                         Content="Delete Reminder"
-                        Height="40"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        Margin="0,0,0,10"
-                        Click="DeleteReminderButton_Click" Background="#FFF44336"/>
+                        Background="#FFF44336"
+                        Click="DeleteReminderButton_Click"/>
                 <Button x:Name="ManageUsersButton"
                         Content="Manage Users"
-                        Height="40"
-                        Foreground="White"
-                        FontWeight="Bold"
                         Visibility="Collapsed"
-                        Margin="0,0,0,10"
-                        Click="ManageUsersButton_Click" Background="#FF2196F3"/>
+                        Background="#FF2196F3"
+                        Click="ManageUsersButton_Click"/>
                 <Button x:Name="LogoutButton"
                         Content="Logout"
-                        Height="40"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        Margin="0,0,0,0"
-                        Click="LogoutButton_Click" Background="#FF9E9E9E"/>
+                        Background="#FF9E9E9E"
+                        Click="LogoutButton_Click"
+                        Margin="0"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top"/>
         </Grid>
 
         <!-- Footer -->
         <Border Grid.Row="1" Background="#FF4C4E56" CornerRadius="10" Padding="10" Grid.ColumnSpan="2" Margin="0,456,0,0" Grid.RowSpan="2">
-            <TextBlock Text="&#x9;&#x9;© 2025 Reminder App. CTTO: Copilot github."
+            <TextBlock Text="© 2025 Reminder App. CTTO: Copilot github."
                        FontSize="20"
                        Foreground="#FFFFF2F2"
-                       HorizontalAlignment="Center" Background="#FF4C4E56" Width="740" FontWeight="Bold" Margin="0,10,0,-10" Padding="0,31,0,0"/>
+                       HorizontalAlignment="Center"
+                       Background="#FF4C4E56"
+                       FontWeight="Bold"
+                       Margin="0,10,0,-10"
+                       Padding="0,31,0,0"/>
         </Border>
     </Grid>
 </Window>

@@ -140,6 +140,7 @@ namespace ReminderApp
 
         private static void TriggerAlarm(string subject, string description, string? alarmPath)
         {
+          
             App.PlayReminderSound(alarmPath);
             var result = MessageBox.Show($"Reminder: {subject}\n{description}", "Reminder",
                 MessageBoxButton.OK, MessageBoxImage.Information);
